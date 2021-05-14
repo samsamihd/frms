@@ -6,6 +6,7 @@ from django.core import serializers
 from frms.core.models import Layer, Feature, FloodPlain
 from frms.core.api.serializers import FeatureSerializer
 
+
 class FeatureViewSet(viewsets.ModelViewSet):
     queryset = Feature.objects.all().order_by('-created_at')
     serializer_class = FeatureSerializer
@@ -25,7 +26,8 @@ def floodplain(request, happened_at):
     floodplain = serializers.serialize('geojson', floodplain, fields=["area"])
     return response.Response({"message": "Get Floodplain Successfully!", "data": floodplain})
 
+
 @api_view()
 def events(request):
     events = FloodPlain.objects.values_list('happened_at', flat=True).distinct()
-    return response.Response({"message": "Get Events Features Successfully!", "data": events})
+    return response.Response({"message": "Get Events Features Successfully!", "data": {"events": events}})

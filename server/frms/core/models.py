@@ -38,6 +38,8 @@ class Feature(models.Model):
     layer = models.ForeignKey(Layer, on_delete=models.CASCADE)
     code = models.CharField(_('Code'), unique=True, max_length=16, default=code_generate("FT"))
     title = models.CharField(_('Title'), max_length=128)
+    attendant = models.CharField(_('Attendant'), max_length=128)
+    phone = models.CharField(_('Phone'), max_length=128)
     description = models.TextField(_('Description'), blank=True, null=True)
     collection = models.GeometryCollectionField(blank=True, null=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
