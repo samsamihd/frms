@@ -1,3 +1,4 @@
+from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField
 from django.urls import reverse
@@ -8,6 +9,7 @@ class User(AbstractUser):
     """Default user for FRMS."""
 
     #: First and last name do not cover name patterns around the globe
+    id = models.AutoField(primary_key=True)
     name = CharField(_("Name of User"), blank=True, max_length=255)
     first_name = None  # type: ignore
     last_name = None  # type: ignore

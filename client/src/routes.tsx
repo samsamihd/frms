@@ -1,10 +1,4 @@
-import {
-  Redirect,
-  Route,
-  RouteChildrenProps,
-  RouteComponentProps,
-  Switch,
-} from "react-router-dom";
+import { Navigate, Route, Outlet, Routes } from "react-router-dom";
 import Auth from "./layouts/Auth";
 import Login from "./components/User/Login";
 import Home from "./components/Home";
@@ -18,39 +12,17 @@ const AppRouter = () => {
       return false;
     }
   };
-  interface RouteProps {
-    component?:
-      | React.ComponentType<RouteComponentProps<any>>
-      | React.ComponentType<any>;
-    render?: (props: RouteComponentProps<any>) => React.ReactNode;
-    children?:
-      | ((props: RouteChildrenProps<any>) => React.ReactNode)
-      | React.ReactNode;
-    path?: string | string[];
-    exact?: boolean;
-    sensitive?: boolean;
-    strict?: boolean;
-  }
-  const PrivateRoute = ({ component: Component, ...rest }: RouteProps) => {
-    if (!Component) return null;
-    return (
-      <Route
-        {...rest}
-        render={(props) =>
-          isLoggedIn() === true ? (
-            <Component {...props} />
-          ) : (
-            <Redirect to="/login" />
-          )
-        }
-      />
-    );
+  const PrivateRoute = () => {
+    const auth = isLoggedIn();
+    return auth ? <Outlet /> : <Navigate to="/login" replace />;
   };
   return (
-    <Switch>
-      <Route exact path="/login" render={() => <Auth content={<Login />} />} />
-      <PrivateRoute exact path="/" component={Home} />
-    </Switch>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<PrivateRoute />}>
+        <Route path="/" element={<Home />} />
+      </Route>
+    </Routes>
   );
 };
 

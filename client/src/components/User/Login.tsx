@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Qs from "qs";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 function Login() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [message, setMessage] = useState("");
 
-  const handleLogin = async (loginData: {
+  const handleLogin: any = async (loginData: {
     username: string;
     password: string;
   }) => {
@@ -24,7 +24,7 @@ function Login() {
     await axios(config)
       .then(function (response) {
         localStorage.setItem("token", JSON.stringify(response.data.token));
-        history.push("/");
+        navigate("/");
         window.location.reload();
       })
       .catch(function (error) {

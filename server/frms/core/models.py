@@ -2,7 +2,7 @@ import string
 import random
 from django.conf import settings
 from django.contrib.gis.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 
 def code_generate(prefix):
@@ -11,6 +11,7 @@ def code_generate(prefix):
 
 
 class Layer(models.Model):
+    id = models.AutoField(primary_key=True)
     code = models.CharField(_('Code'), unique=True, max_length=16, default=code_generate("LY"))
     title = models.CharField(_('Title'), max_length=128)
     description = models.TextField(_('Description'), blank=True, null=True)
@@ -35,6 +36,7 @@ class Layer(models.Model):
 
 
 class Feature(models.Model):
+    id = models.AutoField(primary_key=True)
     layer = models.ForeignKey(Layer, on_delete=models.CASCADE)
     code = models.CharField(_('Code'), unique=True, max_length=16, default=code_generate("FT"))
     title = models.CharField(_('Title'), max_length=128)
@@ -55,6 +57,7 @@ class Feature(models.Model):
 
 
 class FloodPlain(models.Model):
+    id = models.AutoField(primary_key=True)
     area = models.PolygonField()
     happened_at = models.DateTimeField(_('Happened_at'), blank=True, null=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
