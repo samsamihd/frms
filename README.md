@@ -1,1 +1,1 @@
-A web-based DDS for flood risk management.
+A web-based DSS for flood risk management.
