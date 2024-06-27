@@ -1,1 +1,1 @@
-A web-based flood risk management tool.
+A web-based DDS for flood risk management.
